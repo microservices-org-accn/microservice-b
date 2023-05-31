@@ -4,7 +4,6 @@ import com.example.SwaggerCodgen.model.Pet;
 
 import com.example.microserviceb.cache.model.CacheData;
 import com.example.microserviceb.cache.repository.CacheDataRepository;
-import com.example.microserviceb.controller.PetController;
 import com.example.microserviceb.service.PetService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,7 +22,7 @@ import java.util.Optional;
 @Service
 public class PetServiceImpl implements PetService {
 
-    private static final Logger logger = LogManager.getLogger(PetController.class);
+    private static final Logger logger = LogManager.getLogger(PetServiceImpl.class);
 
     @Autowired
     private CacheDataRepository cacheDataRepository;
@@ -51,7 +50,7 @@ public class PetServiceImpl implements PetService {
                 return new ResponseEntity<>(petList, HttpStatus.OK);
             }
         }catch (Exception e){
-            e.printStackTrace();
+            logger.info("error");
         }
 
             // request url
@@ -83,12 +82,10 @@ public class PetServiceImpl implements PetService {
 
                     cacheDataRepository.save(cacheData);
                 } catch (Exception e){
-                    e.printStackTrace();
+                    logger.info("error");
                 }
                 return new ResponseEntity<>(response.getBody(), HttpStatus.OK);
             } else {
-                System.out.println("Request Failed");
-                System.out.println(response.getStatusCode());
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
     }
